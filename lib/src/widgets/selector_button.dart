@@ -5,6 +5,7 @@ import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
 import 'package:intl_phone_number_input/src/widgets/countries_search_list_widget.dart';
 import 'package:intl_phone_number_input/src/widgets/input_widget.dart';
 import 'package:intl_phone_number_input/src/widgets/item.dart';
+import 'package:mobile_design_system/mobile_design_system.dart';
 
 /// [SelectorButton]
 class SelectorButton extends StatelessWidget {
@@ -121,8 +122,43 @@ class SelectorButton extends StatelessWidget {
       BuildContext inheritedContext, List<Country> countries) {
     return showDialog(
       context: inheritedContext,
-      barrierDismissible: true,
-      builder: (BuildContext context) => AlertDialog(
+      barrierColor: Colors.transparent,
+      barrierDismissible: false,
+      useSafeArea: false,
+      builder: (BuildContext context) => Scaffold(
+        backgroundColor: Color(0xffF5F5F5),
+        appBar: AppBar(
+          backgroundColor: ForestColors.colorWood0,
+          elevation: 0,
+          leading: Center(
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 12,
+              ),
+              child: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: ForestColors.colorWood900,
+                ),
+              ),
+            ),
+          ),
+        ),
+        body: Container(
+          width: double.maxFinite,
+          child: CountrySearchListWidget(
+            countries,
+            locale,
+            searchBoxDecoration: searchBoxDecoration,
+            showFlags: selectorConfig.showFlags,
+            useEmoji: selectorConfig.useEmoji,
+            autoFocus: autoFocusSearchField,
+          ),
+        ),
+      ),
+
+      /* AlertDialog(
         content: Directionality(
           textDirection: Directionality.of(inheritedContext),
           child: Container(
@@ -138,6 +174,7 @@ class SelectorButton extends StatelessWidget {
           ),
         ),
       ),
+      */
     );
   }
 

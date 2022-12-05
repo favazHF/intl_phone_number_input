@@ -208,7 +208,7 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
       Country country = previouslySelectedCountry ??
           Utils.getInitialSelectedCountry(
             countries,
-            widget.initialValue?.isoCode ?? '',
+            widget.initialValue?.isoCode ?? 'GB',
           );
 
       // Remove potential duplicates

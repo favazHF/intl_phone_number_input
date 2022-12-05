@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
-import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
 import 'package:mobile_design_system/mobile_design_system.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -46,6 +44,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
       locale: widget.locale,
       value: value,
     );
+    FocusManager.instance.primaryFocus?.unfocus();
     super.initState();
   }
 
@@ -67,8 +66,6 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
   void _onTapNormalInput() {
     setState(() {
       status = InputStatus.focus;
-      focusNode = FocusNode();
-      focusNode.requestFocus();
       focusListener();
     });
   }
@@ -101,87 +98,66 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
             children: [
               ForestText.textBodyM(label: 'Search country'),
               SizedBox(height: ForestSpacing.spaceX1),
-              (status == InputStatus.focus)
-                  ? NeumorphicEffect(
-                      widget: ForestField(
-                        key: widget.key,
-                        controller: _searchController,
-                        onChanged: (value) {
-                          final String value = _searchController.text.trim();
-                          return setState(
-                            () => filteredCountries = Utils.filterCountries(
-                              countries: widget.countries,
-                              locale: widget.locale,
-                              value: value,
-                            ),
-                          );
-                        },
-                        focusNode: focusNode,
-                        filled: true,
-                        textAlignVertical: TextAlignVertical.center,
-                        prefixIcon: SizedBox(
-                          child: Center(
-                            widthFactor: 0.0,
-                            child: FaIcon(
-                              FontAwesomeIcons.magnifyingGlass,
-                              color: ForestColors.colorWood900,
-                              size: 18,
-                            ),
-                          ),
-                        ),
-                        fillColor: ForestColors.colorWood0,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8),
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
+              NeumorphicEffect(
+                backgroundColor: status == InputStatus.focus
+                    ? ForestColors.colorWood100
+                    : ForestColors.colorWood0,
+                depth: status == InputStatus.focus ? -30 : 0,
+                borderWidth: status == InputStatus.focus ? 2 : 1,
+                topPadding: status == InputStatus.focus ? 6 : 0,
+                lightSource: LightSource(0, 0),
+                widget: ForestField(
+                  key: widget.key,
+                  controller: _searchController,
+                  onChanged: (value) {
+                    final String value = _searchController.text.trim();
+                    return setState(
+                      () => filteredCountries = Utils.filterCountries(
+                        countries: widget.countries,
+                        locale: widget.locale,
+                        value: value,
                       ),
-                      borderColor: ForestColors.colorForest800,
-                    )
-                  : ForestField(
-                      key: widget.key,
-                      controller: _searchController,
-                      onChanged: (value) {
-                        final String value = _searchController.text.trim();
-                        return setState(
-                          () => filteredCountries = Utils.filterCountries(
-                            countries: widget.countries,
-                            locale: widget.locale,
-                            value: value,
-                          ),
-                        );
-                      },
-                      hintText: 'United Kingdom',
-                      readOnly: false,
-                      onTap: _onTapNormalInput,
-                      textAlignVertical: TextAlignVertical.center,
-                      prefixIcon: SizedBox(
-                        child: Center(
-                          widthFactor: 0.0,
-                          child: FaIcon(
-                            FontAwesomeIcons.magnifyingGlass,
-                            color: ForestColors.colorWood900,
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        borderSide:
-                            BorderSide(color: ForestColors.colorWood300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        borderSide:
-                            BorderSide(color: ForestColors.colorWood300),
+                    );
+                  },
+                  onTap: () {
+                    if (status != InputStatus.focus) {
+                      _onTapNormalInput();
+                    }
+                  },
+                  focusNode: focusNode,
+                  filled: true,
+                  hintText: 'United Kingdom',
+                  textAlignVertical: TextAlignVertical.center,
+                  prefixIcon: SizedBox(
+                    child: Center(
+                      widthFactor: 0.0,
+                      child: FaIcon(
+                        FontAwesomeIcons.magnifyingGlass,
+                        color: ForestColors.colorWood900,
+                        size: 18,
                       ),
                     ),
+                  ),
+                  fillColor: ForestColors.colorWood0,
+                  contentPadding: status == InputStatus.focus
+                      ? EdgeInsets.fromLTRB(12, 20, 12, 12)
+                      : EdgeInsets.fromLTRB(12, 24, 12, 16),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
+                    ),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                borderColor: status == InputStatus.focus
+                    ? ForestColors.colorForest800
+                    : ForestColors.colorWood300,
+              )
             ],
           ),
           /* TextFormField(
@@ -296,7 +272,7 @@ class DirectionalCountryListTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             if (showFlags) _Flag(country: country, useEmoji: useEmoji),
-            SizedBox(width: ForestSpacing.spaceX05),
+            SizedBox(width: ForestSpacing.spaceX1),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,

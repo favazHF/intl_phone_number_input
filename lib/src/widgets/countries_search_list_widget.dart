@@ -4,6 +4,7 @@ import 'package:mobile_design_system/mobile_design_system.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_design_system/src/atoms/neumorphic/neumorphic_effect.dart';
+import 'package:mobile_l10n/mobile_l10n.dart';
 
 /// Creates a list of Countries with a search textfield.
 class CountrySearchListWidget extends StatefulWidget {
@@ -96,7 +97,10 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ForestText.textBodyM(label: 'Search country'),
+              ForestText.textBodyM(
+                label: Lt.of(context).SearchCountry__Label,
+                color: ForestColors.colorWood900,
+              ),
               SizedBox(height: ForestSpacing.spaceX1),
               NeumorphicEffect(
                 backgroundColor: status == InputStatus.focus
@@ -126,7 +130,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
                   },
                   focusNode: focusNode,
                   filled: true,
-                  hintText: 'United Kingdom',
+                  hintText: Lt.of(context).SearchCountry__Placeholder,
                   textAlignVertical: TextAlignVertical.center,
                   prefixIcon: SizedBox(
                     child: Center(

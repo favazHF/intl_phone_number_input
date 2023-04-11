@@ -22,9 +22,9 @@ dependencies:
 
 dependency_overrides:
   mobile_design_system:
-    path: /Users/favaz-human-forest/Desktop/human_forest_app/mobile_design_system
+    path: /Users/favaz-human-forest/Desktop/HumanForestApp/mobile_design_system
   mobile_l10n:
-    path: /Users/favaz-human-forest/Desktop/human_forest_app/mobile_l10n
+    path: /Users/favaz-human-forest/Desktop/HumanForestApp/mobile_l10n
 
 dev_dependencies:
 

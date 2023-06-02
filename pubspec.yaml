@@ -21,6 +21,8 @@ dependencies:
       ref: main
 
 dependency_overrides:
+  mobile_dependencies:
+    path: /Users/favaz-human-forest/Desktop/HumanForestApp/mobile_dependencies
   mobile_design_system:
     path: /Users/favaz-human-forest/Desktop/HumanForestApp/mobile_design_system
   mobile_l10n:

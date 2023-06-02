@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
 import 'package:mobile_design_system/mobile_design_system.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mobile_design_system/src/atoms/neumorphic/neumorphic_effect.dart';
 import 'package:mobile_l10n/mobile_l10n.dart';
 
 /// Creates a list of Countries with a search textfield.
